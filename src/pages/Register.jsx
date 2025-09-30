@@ -1,18 +1,16 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect } from "react";
 import { AvatarContext } from "../context/AvatarContextProvider";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Register() {
   const { avatar, setAvatar } = useContext(AvatarContext);
   const navigate = useNavigate();
-  const fileInputRef = useRef(null);
-  // const [FileName, setFileName] = useState('')
 
   // Redirect if user is already logged in
   useEffect(() => {
     let user = localStorage.getItem("chat_app_user");
     if (user) {
-      navigate("/chat");
+      navigate("/login");
     }
   }, []);
 
@@ -20,33 +18,15 @@ export default function Login() {
   useEffect(() => {
     let user  = localStorage.getItem("chat_app_user");
     if(user){
-      navigate("/chat");
+      navigate("/login");
       return;
     }
     
     // Cek jika avatar belum ada, maka fetch yang baru
     if (!avatar) {
+      handleAvatar();
     }
   }, []); // <-- Array kosong berarti hanya dijalankan sekali saat render pertama
-
-
-
-const handleImageClick =()=>{
-  fileInputRef.current.click();
-}
-
-const handleFileChange =(e)=>{
-  const file = e.target.files[0];
-  if(file){
-    const newAvatarUrl = URL.createObjectURL(file);
-    setAvatar(newAvatarUrl);
-  }
-}
-
-// untuk menavigasi ke halaman register
-const handleToRegister = () => {
-  navigate("/register");
-}
 
   // Fungsi untuk mengganti avatar
   // const handleAvatar = () => {
@@ -55,12 +35,20 @@ const handleToRegister = () => {
   //   setAvatar(`https://api.multiavatar.com/${randomId}.svg`);
   // };
 
+  // Fungsi untuk navigasi ke halaman login
+  const handleToLogin = () => {
+    navigate("/login");
+  }
+
+ 
+
   // Handle form submission
   const handleLogin = (e) => {
     e.preventDefault();
     let username = e.target.username.value;
     let password = e.target.password.value;
 
+    
 
     if (username.trim()&&password && avatar) {
       localStorage.setItem(
@@ -72,7 +60,7 @@ const handleToRegister = () => {
         })
       );
       // Gunakan navigate untuk berpindah halaman, lebih baik dari window.location
-      navigate("/chat");
+      navigate("/login");
     }else{
       alert("Username and password are required")
     }
@@ -87,7 +75,11 @@ const handleToRegister = () => {
     <div className="pl-5 md:block bg:cover bg-center rounded-lg pt-5 object-cover"
       style={{backgroundImage : "url('https://images.pexels.com/photos/5081918/pexels-photo-5081918.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')"}}
     >
-      
+      <button onClick={handleToLogin} className="   w-14 h-6 bg-black text-white rounded-2xl font-bold hover:bg-gray-800 transition-colors cursor-pointer m-2">
+          <span class="material-symbols-outlined">
+            keyboard_backspace
+          </span>
+      </button>
       
     </div>
       
@@ -100,26 +92,21 @@ const handleToRegister = () => {
         onSubmit={handleLogin}
       >
         <div className="relative w-28 h-28 mb-4">
-          <img
+            <h1 className="font-bold text-center text-2xl justify-center"> REGISTER</h1>
+
+          {/* memasukkan Avatar yang ada di Login */}
+          {/* <img
             src={avatar}
             alt="avatar"
             className="w-full h-full rounded-full border-2 border-gray-200"
-          />
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            className="hidden"
-            accept="image/*" 
-          />
-         
-          <button
+          /> */}
+          {/* <button
             className="w-10 h-10 bg-green-600 text-white text-xl font-bold rounded-full absolute -right-2 -bottom-2 flex items-center justify-center hover:bg-green-700 transition-colors"
             type="button"
-            onClick={handleImageClick}
+            onClick={handleAvatar}
           >
-          ✏️
-          </button>
+            ?
+          </button> */}
         </div>
 
         
@@ -148,9 +135,8 @@ const handleToRegister = () => {
       <div className="w-full flex flex-col gap-2 ">
 
         {/* 3. Perbaikan Tombol: Tambahkan class hover & transition */}
-        <button className="w-full h-12 bg-cyan-900 text-white rounded-lg font-bold hover:bg-gray-800 transition-colors"type="submit" >C O N T I N U E</button>
-        <button className=" cursor-pointer w-full h-12 bg-white text-black rounded-lg font-bold hover:bg-gray-300 transition-colors"type="button" >Login with google</button>
-        <button className="cursor-pointer underline-offset-[17]"type="button"  onClick={handleToRegister}>Register</button>
+        <button className="w-full h-12 bg-cyan-900 text-white rounded-lg font-bold hover:bg-gray-800 transition-colors"type="submit" >C R E A T E</button>
+        <button className="w-full h-12 bg-white text-black rounded-lg font-bold hover:bg-gray-300 transition-colors"type="button" >Login with google</button>
           </div>
 
         </form>

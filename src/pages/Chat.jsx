@@ -47,7 +47,7 @@ export default function Chat(){
     const [message, setMessage] = useState([
         {
             id  : 12312,
-            message :"ini user lain",
+            message :"admin",
             createdAt : Date.now(),
             user  : {
                 username : "hafizh",
@@ -108,7 +108,7 @@ export default function Chat(){
             return 
         }
 
-        let user = JSON.parse(localStorage.getItem("chat_app_user"))
+        let user = JSON.parse(localStorage.getItem("vibe-app_user"))
         e.target.message.value = ""
      
 
@@ -128,17 +128,17 @@ export default function Chat(){
 
     if(loading){
         return(
-            <div className="w-screen h-screen flex justify-center items-center"> 
+            <div className=" w-screen h-screen flex justify-center items-center"> 
                 loading....
             </div>
         )
     }
     return(
-        <main className="w-screen h-screen flex flex-col">
-            <header className=" w-full h-16 px-6 flex  items-center justify-between  bg-gradient-to-r from-cyan-500 to-cyan-700 fixed top-0 left-0">
-                <div className="flex gap-2 text-white items-center">
+        <main className=" w-screen h-screen flex flex-col">
+            <header className=" max-v-[500px] mx-auto w-full h-16 px-6 flex  items-center justify-between  bg-gradient-to-r from-cyan-500 to-cyan-700 fixed top-0 left-0">
+                <div className=" flex gap-2 text-white items-center">
                     <img src={signedUser?.avatar} alt="avatar" 
-                    className="w-10 h-10"
+                    className=" w-10 h-10"
                     />
                     <h1>{signedUser?.username}</h1>
                 </div>
